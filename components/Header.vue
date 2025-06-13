@@ -2,8 +2,31 @@
   <header class="w-full">
     <div class="border-b border-gray-200"></div>
 
-    <div class="flex flex-wrap justify-between items-center px-4 md:px-10 py-3 gap-4">
-      <div class="hidden md:flex items-center space-x-6 text-gray-700 text-sm">
+    <div class="flex items-center justify-between px-4 py-3 md:hidden w-full">
+      <button>
+        <img src="/icons/menu.svg" alt="menu" class="w-8 h-8" />
+      </button>
+      <img src="/Logo.svg" alt="BRUT" class="h-10 mx-auto" />
+      <div class="flex items-center space-x-6">
+        <img src="/icons/search.svg" alt="search" class="w-7 h-7" />
+        <img src="/icons/heart.svg" alt="favorites" class="w-7 h-7" />
+        <div class="relative">
+          <img src="/icons/buy.svg" alt="cart" class="w-10 h-10" @click="openCart" />
+          <span
+            v-if="cartCount > 0"
+            class="absolute -top-2 -right-2 bg-red-500 text-white text-sm w-6 h-6 flex items-center justify-center rounded-full"
+          >
+            {{ cartCount }}
+          </span>
+          <CartDropdown :visible="cartDropdownOpen" :close="closeCart" />
+        </div>
+        <img src="/icons/user.svg" alt="user" class="w-7 h-7" />
+      </div>
+    </div>
+
+
+    <div class="hidden md:flex flex-wrap justify-between items-center px-4 md:px-10 py-3 gap-4">
+      <div class="flex items-center space-x-6 text-gray-700 text-sm">
         <div class="flex items-center space-x-1">
           <img src="/icons/navigations1.svg" alt="location" class="w-4 h-4" />
           <span>Алматы</span>
@@ -29,31 +52,29 @@
           class="bg-gray-100 px-4 py-1 rounded-md text-sm focus:outline-none w-full max-w-[160px] md:max-w-[200px]"
         />
         <img src="/icons/heart.svg" alt="favorites" class="w-5 h-5" />
-        
-        <!-- Корзина с количеством -->
         <div class="relative">
-          <img src="/icons/buy.svg" alt="cart" class="w-5 h-5" />
+          <img src="/icons/buy.svg" alt="cart" class="w-8 h-8" @click="openCart" />
           <span
             v-if="cartCount > 0"
-            class="absolute -top-2 -right-2 bg-red-500 text-white text-xs w-5 h-5 flex items-center justify-center rounded-full"
+            class="absolute -top-2 -right-2 bg-red-500 text-white text-sm w-6 h-6 flex items-center justify-center rounded-full"
           >
             {{ cartCount }}
           </span>
+          <CartDropdown :visible="cartDropdownOpen" :close="closeCart" />
         </div>
-
         <img src="/icons/user.svg" alt="user" class="w-5 h-5" />
       </div>
     </div>
 
     <div class="border-b border-gray-200"></div>
 
+
     <nav
-      class="flex flex-wrap justify-center items-center w-full px-4 md:px-10 py-2 gap-4 md:gap-6 text-sm text-gray-800 relative"
+      class="hidden md:flex flex-wrap justify-center items-center w-full px-4 md:px-10 py-2 gap-4 md:gap-6 text-sm text-gray-800 relative"
     >
       <button class="absolute left-4 md:static md:ml-0 block">
         <img src="/icons/menu.svg" alt="menu" class="w-5 h-5" />
       </button>
-      
       <!-- Навигационные элементы с выпадающими меню -->
       <div 
         v-for="(item, index) in navItems" 
@@ -63,8 +84,6 @@
         @mouseleave="closeDropdown(index)"
       >
         <span class="text-center cursor-pointer hover:text-gray-600 py-2 block whitespace-nowrap">{{ item.title }}</span>
-        
-        <!-- Выпадающее меню - оптимизированное для правильного позиционирования -->
         <div 
           v-if="item.isOpen"
           class="dropdown-menu absolute bg-white shadow-lg rounded-md p-4 z-50"
@@ -95,10 +114,12 @@
 <script setup lang="ts">
 import { ref, computed, reactive, onMounted, onBeforeUnmount } from 'vue'
 import { useCartStore } from '@/stores/cartStore'
+import CartDropdown from './CartDropdown.vue'
 
 const cartStore = useCartStore()
 const cartCount = computed(() => cartStore.totalCount)
 const windowWidth = ref<number>(typeof window !== 'undefined' ? window.innerWidth : 1024)
+const cartDropdownOpen = ref(false)
 
 const updateWindowWidth = () => {
   if (typeof window !== 'undefined') {
@@ -305,6 +326,9 @@ const openDropdown = (index: number) => {
 const closeDropdown = (index: number) => {
   navItems[index].isOpen = false
 }
+
+function openCart() { cartDropdownOpen.value = true }
+function closeCart() { cartDropdownOpen.value = false }
 </script>
 
 <style scoped>
@@ -329,10 +353,10 @@ const closeDropdown = (index: number) => {
   animation: dropdownFadeIn 0.15s ease-out;
   max-height: calc(100vh - 200px);
   overflow-y: auto;
-  z-index: 999; /* Увеличим z-index, чтобы меню было поверх других элементов */
+  z-index: 999; 
 }
 
-/* Быстрая анимация появления для устранения лагов */
+
 @keyframes dropdownFadeIn {
   from {
     opacity: 0;

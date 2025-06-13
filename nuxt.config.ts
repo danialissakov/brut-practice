@@ -4,7 +4,7 @@ import tailwindcss from "@tailwindcss/vite";
 export default defineNuxtConfig({
   compatibilityDate: "2024-11-01",
   devtools: { enabled: true },
-  css: ['~/assets/css/global.css'],
+  css: ['~/assets/css/global.css', 'vue-toastification/dist/index.css'],
 
   vite: {
     plugins: [tailwindcss()],
@@ -15,4 +15,8 @@ export default defineNuxtConfig({
     "nuxt-swiper",
     "@pinia/nuxt", // <-- ВАЖНО! Pinia добавлена сюда
   ],
+
+  build: {
+    transpile: ['vue-toastification']
+  }
 });

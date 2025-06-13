@@ -24,7 +24,7 @@
 <template>
     <section class="py-10 bg-white">
       <div class="max-w-7xl mx-auto px-4">
-        <h2 class="text-2xl font-bold mb-6">Бренды</h2>
+        <h2 class="text-2xl mb-6 font-roboto">Бренды</h2>
         <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-6">
           <a
             v-for="brand in brands"

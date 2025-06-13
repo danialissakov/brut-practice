@@ -6,7 +6,12 @@ export default {
       "./app.vue",
     ],
     theme: {
-      extend: {},
+      extend: {
+        fontFamily: {
+          sans: ["'PT Sans'", 'sans-serif'],
+          roboto: ["'Roboto'", 'sans-serif'],
+        },
+      },
     },
     plugins: [],
   };

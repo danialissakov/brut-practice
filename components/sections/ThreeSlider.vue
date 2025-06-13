@@ -28,7 +28,7 @@ onMounted(async () => {
 
 <template>
   <div class="max-w-7xl mx-auto py-20 px-4">
-    <h2 class="text-2xl font-bold mb-6">АКЦИИ</h2>
+    <h2 class="text-2xl mb-6 font-roboto">АКЦИИ</h2>
     <div class="flex items-center justify-between mb-10 border-b border-gray-300 pb-1"></div>
     
     <Swiper

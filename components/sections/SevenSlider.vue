@@ -24,6 +24,7 @@ interface Product {
   price: number;
   attributes: Attribute[];
   quantity?: number;
+  title?: string;
 }
 
 const products = ref<Product[]>([])
@@ -80,7 +81,7 @@ function addToCart(product: Product) {
 
 <template>
   <div class="max-w-7xl mx-auto py-20 px-4">
-    <h2 class="text-2xl font-bold mb-5">ВЫСШИЙ РЕЙТИНГ</h2>
+    <h2 class="text-2xl mb-5 font-roboto">ВЫСШИЙ РЕЙТИНГ</h2>
     <div class="flex items-center justify-between mb-10 border-b border-gray-300 pb-1"></div>
 
     <Swiper
@@ -96,7 +97,7 @@ function addToCart(product: Product) {
     >
       <SwiperSlide v-for="product in products" :key="product.id" class="overflow-visible">
         <div class="group relative bg-white rounded-xs p-6 border border-gray-300 transition-all duration-300 transform hover:scale-100 hover:shadow-2xl hover:z-10 text-center">
-          <h3 class="text-base font-semibold mb-3 line-clamp-10 h-12">
+          <h3 class="text-base mb-3 line-clamp-10 h-12 font-roboto">
             {{ product.name }}
           </h3>
 
@@ -117,7 +118,7 @@ function addToCart(product: Product) {
               <button @click="increase(product)" class="px-3 py-1 border-l border-gray-300">+</button>
             </div>
             <button @click="addToCart(product)" class="bg-black text-white px-5 py-2 rounded">
-              🛒
+              <img src="/icons/cart.svg" alt="cart" class="w-4 h-4" />
             </button>
           </div>
         </div>

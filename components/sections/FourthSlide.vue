@@ -4,6 +4,9 @@ import { Autoplay, Pagination, Navigation } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
+import { useCartStore } from '@/stores/cartStore';
+
+const cartStore = useCartStore();
 
 const products = [
   {
@@ -12,7 +15,7 @@ const products = [
     title: 'Вино Chianti Castiglioni, Frescobaldi, 2019 г.',
     code: '56955',
     country: 'Италия, белое сухое, 1л',
-    price: '34 000 тг',
+    price: 34000,
   },
   {
     id: 2,
@@ -20,7 +23,7 @@ const products = [
     title: 'Вино Chianti Castiglioni, Frescobaldi, 2019 г.',
     code: '56956',
     country: 'Италия, белое сухое, 1л',
-    price: '34 000 тг',
+    price: 34000,
   },
   {
     id: 3,
@@ -28,7 +31,7 @@ const products = [
     title: 'Вино Chianti Castiglioni, Frescobaldi, 2019 г.',
     code: '56957',
     country: 'Италия, белое сухое, 1л',
-    price: '34 000 тг',
+    price: 34000,
   },
   {
     id: 4,
@@ -36,28 +39,38 @@ const products = [
     title: 'Вино Chianti Castiglioni, Frescobaldi, 2019 г.',
     code: '56957',
     country: 'Италия, белое сухое, 1л',
-    price: '34 000 тг',
+    price: 34000,
   },  {
     id: 5,
     image: '/images/image65.png',
     title: 'Вино Chianti Castiglioni, Frescobaldi, 2019 г.',
     code: '56957',
     country: 'Италия, белое сухое, 1л',
-    price: '34 000 тг',
+    price: 34000,
   },  {
     id: 6,
     image: '/images/image64.png',
     title: 'Вино Chianti Castiglioni, Frescobaldi, 2019 г.',
     code: '56957',
     country: 'Италия, белое сухое, 1л',
-    price: '34 000 тг',
+    price: 34000,
   },
 ];
+
+function addToCart(product: any) {
+  cartStore.addToCart({
+    id: product.id,
+    name: product.title,
+    image: product.image,
+    price: product.price,
+    quantity: 1,
+  });
+}
 </script>
 
 <template>
   <div class="max-w-7xl mx-auto py-20 px-4">
-    <h2 class="text-2xl font-bold mb-6">КОКТЕЙЛЬНЫЕ СЕТЫ</h2>
+    <h2 class="text-2xl mb-6 font-roboto">КОКТЕЙЛЬНЫЕ СЕТЫ</h2>
     <div class="flex items-center justify-between mb-10 border-b border-gray-300 pb-1"></div>
     <Swiper
       :spaceBetween="10"
@@ -72,7 +85,7 @@ const products = [
     >
     <SwiperSlide v-for="product in products" :key="product.id" class="overflow-visible">
       <div class="group relative bg-white rounded-xs p-6 border border-gray-300 transition-all duration-300 transform hover:scale-100 hover:shadow-2xl hover:z-10 text-center">
-          <h3 class="text-lg font-semibold mb-2">{{ product.title }}</h3>
+          <h3 class="text-lg mb-2 font-roboto">{{ product.title }}</h3>
 
 
           <div class="relative w-full h-56 flex justify-center items-center bg-white">
@@ -81,9 +94,11 @@ const products = [
 
           <p class="text-sm text-gray-500 mt-3">{{ product.code }}</p>
           <p class="text-sm text-gray-500">{{ product.country }}</p>
-          <p class="text-xl font-bold mt-2">{{ product.price }}</p>
+          <p class="text-xl font-bold mt-2">{{ product.price }} ₸</p>
           <div class="mt-6 flex justify-center items-center">
-            <button class="bg-black text-white px-10 py-2 rounded-xs">🛒</button>
+            <button @click="addToCart(product)" class="bg-black text-white px-10 py-2 rounded-xs">
+              <img src="/icons/cart.svg" alt="cart" class="w-4 h-4" />
+            </button>
           </div>
           
         </div>

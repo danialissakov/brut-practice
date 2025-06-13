@@ -1,1 +1,15 @@
+@import url('https://fonts.googleapis.com/css2?family=PT+Sans:wght@400;700&family=Roboto:wght@400;700&display=swap');
 @import "tailwindcss";
+
+html, body {
+  font-family: 'PT Sans', sans-serif;
+}
+
+.v-toast__item,
+.v-toast__item--default,
+.v-toast__item--info {
+  background: #fff !important;
+  color: #18181b !important;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.12) !important;
+  border-radius: 16px !important;
+}

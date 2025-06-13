@@ -11,7 +11,11 @@ interface CartItem {
 
 export const useCartStore = defineStore('cart', {
   state: () => ({
-    items: [] as CartItem[]
+    items: [] as CartItem[],
+    notification: {
+      show: false,
+      product: null as null | CartItem
+    }
   }),
 
   getters: {
@@ -26,6 +30,15 @@ export const useCartStore = defineStore('cart', {
       } else {
         this.items.push({ ...product })
       }
+      // Show notification
+      this.notification.product = { ...product }
+      this.notification.show = true
+      setTimeout(() => {
+        this.notification.show = false
+      }, 3000)
+    },
+    hideNotification() {
+      this.notification.show = false
     }
   }
 })
